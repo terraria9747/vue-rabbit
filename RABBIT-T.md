@@ -128,3 +128,7 @@
 2. <a href="https://www.vueusejs.com/core/useIntersectionObserver/#useintersectionobserver">判断图片是否进入视口(vueUse)</a>
 3. 进入视口, 发送图片资源请求 (img.src=url)
 
+## 6.图片懒加载指令优化
+1. 把懒加载的逻辑封装成插件, 在主文件中注册
+2. 在监听的图片第一次完成加载之后就停止监听, 避免重复监听
+
