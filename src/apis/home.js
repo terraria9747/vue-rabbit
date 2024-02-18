@@ -21,3 +21,10 @@ export function getHotAPI() {
 		url: "/home/hot",
 	})
 }
+
+// 热门品牌
+export function getBrandAPI() {
+	return http({
+		url: "/home/goods"
+	})
+}
