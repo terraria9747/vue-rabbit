@@ -171,3 +171,11 @@ active-class="active"
 ```
 2. 分类列表渲染
 
+## 5.路由缓存问题
+缓存问题：
+当路由path一样，参数不同的时候会选择直接复用路由对应的组件 <br />
+进而导致数据无法事实更新 <br />
+
+解决方案：
+1. 给 routerv-view 添加key属性，破坏缓存
+2. 使用 onBeforeRouteUpdate钩子函数，做精确更新

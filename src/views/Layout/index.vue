@@ -18,6 +18,9 @@ onMounted(() => {
   <LayoutNav />
   <LayoutHeader />
   <!-- 二级路由入口 -->
+  <!-- 添加key 破坏复用机制 强制销毁重建 -->
+  <!-- 问题: banner只需请求一次, 重复销毁重建会造成资源浪费 -->
+  <!-- <router-view :key="$route.fullPath" /> -->
   <router-view />
   <LayoutFooter />
 </template>

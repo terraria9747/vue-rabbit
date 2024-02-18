@@ -4,14 +4,16 @@ import { getBannerAPI } from "@/apis/home";
 import { useRoute } from "vue-router";
 import { onMounted, ref } from "vue";
 import GoodsItem from "@/views/Home/components/HomeGoodsltem.vue";
+// vue-router 提供的导航守卫主要用来通过跳转或取消的方式守卫导航
+import { onBeforeRouteUpdate } from "vue-router";
 
 const route = useRoute();
 
 // 获取面包屑导航数据
 const categoryList = ref([]);
-const category = async () => {
+const category = async (id = route.params.id) => {
   // 组件内部获取路由参数
-  const res = await getCategoryAPI(route.params.id);
+  const res = await getCategoryAPI(id);
   categoryList.value = res.data.result;
 };
 
@@ -27,6 +29,13 @@ const getBanner = async () => {
 onMounted(() => {
   category();
   getBanner();
+});
+
+// 监听路由跳转
+onBeforeRouteUpdate((to) => {
+  // to 目标路由
+  // console.log("路由跳转了", to);
+  category(to.params.id);
 });
 </script>
 
