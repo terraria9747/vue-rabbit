@@ -146,3 +146,15 @@
 ## 1.一级分类路由传参跳转
 根据参数跳转到指定的路由页面
 
+## 2.面包屑导航渲染
+1.搭建结构
+2.定义接口
+3.发送请求获取数据
+```js
+// 组件内部获取路由参数
+import { useRoute } from "vue-router"
+const route = useRoute()
+console.log(route.params.id)
+```
+4.前端渲染
+
