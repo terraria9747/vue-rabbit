@@ -23,7 +23,7 @@ const reqData = ref({
 });
 const goodList = ref([]);
 const getGoods = async () => {
-  const res = await getGoodsAPI(reqData);
+  const res = await getGoodsAPI(reqData.value);
   goodList.value = res.data.result.items;
 };
 
