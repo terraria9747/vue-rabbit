@@ -2,9 +2,14 @@
 import http from "@/utils/http"
 
 // banner信息
-export function getBannerAPI() {
+export function getBannerAPI(params = {}) {
+	// 把distributionSite从params中解构出来, 并赋值为1
+	const { distributionSite = 1 } = params
 	return http({
-		url: "/home/banner"
+		url: "/home/banner",
+		params: {
+			distributionSite
+		}
 	})
 }
 
