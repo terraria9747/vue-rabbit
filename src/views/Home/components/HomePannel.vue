@@ -1,6 +1,6 @@
 <script setup>
 defineProps({
-  name: {
+  title: {
     type: String,
   },
   subTitle: {
@@ -15,7 +15,7 @@ defineProps({
       <div class="head">
         <!-- 主标题和副标题 -->
         <h3>
-          {{ name }}<small>{{ subTitle }}</small>
+          {{ title }}<small>{{ subTitle }}</small>
         </h3>
       </div>
       <!-- 主体内容区域 -->
