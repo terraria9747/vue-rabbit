@@ -179,3 +179,10 @@ active-class="active"
 解决方案：
 1. 给 routerv-view 添加key属性，破坏缓存
 2. 使用 onBeforeRouteUpdate钩子函数，做精确更新
+
+## 6.逻辑函数拆分业务
+把banner和category的逻辑拆分成两个文件
+1. 按照业务声明以 `use` 打头的逻辑函数
+2. 把独立的业务逻辑封装到各个函数内部
+3. 函数内部把组件中需要用到的数据或者方法return出去
+4. 在组件中调用函数把数据或者方法组合回来使用
