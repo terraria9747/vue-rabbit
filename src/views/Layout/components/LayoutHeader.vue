@@ -1,17 +1,6 @@
 <script setup>
-import { getCategoryAPI } from "@/apis/layout.js";
-import { onMounted, ref } from "vue";
-
-// 存储一级路由导航
-const category = ref([]);
-const getCategory = async () => {
-  const res = await getCategoryAPI();
-  category.value = res.data.result;
-};
-
-onMounted(() => {
-  getCategory();
-});
+import { useCategory } from "@/stores/layout";
+const Category = useCategory();
 </script>
 
 <template>
@@ -21,7 +10,7 @@ onMounted(() => {
         <RouterLink to="/">小兔鲜</RouterLink>
       </h1>
       <ul class="app-header-nav">
-        <li class="home" v-for="item in category" :key="item.id">
+        <li class="home" v-for="item in Category.categorylist" :key="item.id">
           <RouterLink to="/">{{ item.name }}</RouterLink>
         </li>
       </ul>
