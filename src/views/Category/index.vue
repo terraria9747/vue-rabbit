@@ -3,6 +3,7 @@ import { getCategoryAPI } from "@/apis/category";
 import { getBannerAPI } from "@/apis/home";
 import { useRoute } from "vue-router";
 import { onMounted, ref } from "vue";
+import GoodsItem from "@/views/Home/components/HomeGoodsltem.vue";
 
 const route = useRoute();
 
@@ -47,6 +48,31 @@ onMounted(() => {
             <img :src="item.imgUrl" alt="" />
           </el-carousel-item>
         </el-carousel>
+      </div>
+
+      <!-- 商品卡片 -->
+      <div class="sub-list">
+        <h3>全部分类</h3>
+        <ul>
+          <li v-for="i in categoryList.children" :key="i.id">
+            <RouterLink to="/">
+              <img :src="i.picture" />
+              <p>{{ i.name }}</p>
+            </RouterLink>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="ref-goods"
+        v-for="item in categoryList.children"
+        :key="item.id"
+      >
+        <div class="head">
+          <h3>- {{ item.name }}-</h3>
+        </div>
+        <div class="body">
+          <GoodsItem v-for="good in item.goods" :good="good" :key="good.id" />
+        </div>
       </div>
     </div>
   </div>

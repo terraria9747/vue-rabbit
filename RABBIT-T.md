@@ -163,5 +163,11 @@ console.log(route.params.id)
 2. 发起请求获取数据
 3. 前端渲染
 
-
+## 4.激活状态 | 分类列表渲染
+1. 激活状态
+```js
+active-class="active"
+<RouterLink active-class="active" :to="`/category/${item.id}`">{{item.name}}</RouterLink>
+```
+2. 分类列表渲染
 
