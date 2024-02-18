@@ -57,4 +57,8 @@
 2. 样式资源 styles
 3. 安装`error lens`插件(提供错误警告的vscode插件)
 
+## 10.scss文件自动导入
+1. 新建一个var.scss文件
+2. 通过`vite.config.js`配置自动导入文件
+
 # 二.

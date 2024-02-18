@@ -3,9 +3,13 @@
 <template>
   <!-- 一级路由出口 -->
   <router-view />
+  <div class="test">测试一下</div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+.test {
+  color: $warnColor;
+}
 header {
   line-height: 1.5;
   max-height: 100vh;
