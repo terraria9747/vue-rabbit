@@ -113,3 +113,18 @@
 1. 准备模板
 2. 定制props
 3. 定制插槽内容(接口 + 渲染模板)
+
+## 5.图片懒加载指令实现
+电商网站的首页通常会很长，用户不一定能访问到页面靠下面的图片，<br />
+这类图片通过懒加载优化手段可以做到只有进入视口区域才发送图片请求 <br />
+
+指令用法:
+```js
+<img v-img-lazy="item.pic">
+```
+在图片img身上绑定指令，该图片只有在正式进入到视口区域时才会发送图片网络请求 <br />
+
+1. <a href="https://cn.vuejs.org/guide/reusability/custom-directives.html#directive-hooks">指令语法 - 自定义指令</a>
+2. <a href="https://www.vueusejs.com/core/useIntersectionObserver/#useintersectionobserver">判断图片是否进入视口(vueUse)</a>
+3. 进入视口, 发送图片资源请求 (img.src=url)
+
