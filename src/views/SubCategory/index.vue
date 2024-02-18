@@ -1,18 +1,35 @@
 <!-- 二级路由页面 -->
 <script setup>
-import { getSubCategoryAPI } from "@/apis/category.js";
+import { getSubCategoryAPI, getGoodsAPI } from "@/apis/category.js";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
+import HomeGoodsltem from "@/views/Home/components/HomeGoodsltem.vue";
 
 const route = useRoute();
+
+// 获取面包屑导航列表数据
 const subCategoryList = ref([]);
 const getSubCategory = async () => {
   const res = await getSubCategoryAPI(route.params.id);
   subCategoryList.value = res.data.result;
 };
 
+// 获取基本商品数据
+const reqData = ref({
+  categoryId: route.params.id,
+  page: 1,
+  pageSize: 20,
+  sortField: "publishTime", // publishTime,orderNum,price,evaluateNum
+});
+const goodList = ref([]);
+const getGoods = async () => {
+  const res = await getGoodsAPI(reqData);
+  goodList.value = res.data.result.items;
+};
+
 onMounted(() => {
   getSubCategory();
+  getGoods();
 });
 </script>
 
@@ -36,6 +53,11 @@ onMounted(() => {
       </el-tabs>
       <div class="body">
         <!-- 商品列表-->
+        <HomeGoodsltem
+          v-for="good in goodList"
+          :good="good"
+          :key="good.id"
+        ></HomeGoodsltem>
       </div>
     </div>
   </div>

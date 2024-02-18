@@ -20,3 +20,12 @@ export const getSubCategoryAPI = (id) => {
 		}
 	})
 }
+
+// 基础商品列表
+export const getGoodsAPI = (data) => {
+	return http({
+		url: "/category/goods/temporary",
+		method: "POST",
+		data
+	})
+}
