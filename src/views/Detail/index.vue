@@ -2,6 +2,7 @@
 import { getGoodsDetailAPI } from "@/apis/detail.js";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
+import HotDetail from "./HotDetail/index.vue";
 
 const route = useRoute();
 
@@ -130,7 +131,10 @@ onMounted(() => {
               </div>
             </div>
             <!-- 24热榜+专题推荐 -->
-            <div class="goods-aside"></div>
+            <div class="goods-aside">
+              <HotDetail />
+              <HotDetail />
+            </div>
           </div>
         </div>
       </div>
