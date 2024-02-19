@@ -34,6 +34,21 @@ const onTabChange = () => {
   getGoods();
 };
 
+// 无限滚动加载数据
+const disabled = ref(false);
+const load = async () => {
+  console.log("滚动到底部触发");
+  // 下一页数据
+  reqData.value.page++;
+  const res = await getGoodsAPI(reqData.value);
+  // 新老数据拼接
+  goodList.value = [...goodList.value, ...res.data.result.items];
+  // 如果没有数据, 停止加载
+  if (res.data.result.items === "") {
+    disabled.value = true;
+  }
+};
+
 onMounted(() => {
   getSubCategory();
   getGoods();
@@ -58,7 +73,11 @@ onMounted(() => {
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
-      <div class="body">
+      <div
+        class="body"
+        v-infinite-scroll="load"
+        :infinite-scroll-disabled="disabled"
+      >
         <!-- 商品列表-->
         <HomeGoodsltem
           v-for="good in goodList"
