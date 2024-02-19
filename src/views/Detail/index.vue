@@ -3,6 +3,7 @@ import { getGoodsDetailAPI } from "@/apis/detail.js";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import HotDetail from "./HotDetail/index.vue";
+import imageView from "@/components/imageView/index.vue";
 
 const route = useRoute();
 
@@ -44,6 +45,7 @@ onMounted(() => {
           <div class="goods-info">
             <div class="media">
               <!-- 图片预览区 -->
+              <imageView />
 
               <!-- 统计数量 -->
               <ul class="goods-sales">
