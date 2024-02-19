@@ -313,3 +313,17 @@ SKU（Stock Keeping Unit）是库存管理的一种方式，它用于唯一标�
 ## 6. 登录&未登录
 1. 有token 显示登录模板
 2. 无token 显示未登录模板
+
+## 7. 请求拦截器携带token
+Token作为用户标识，在很多个接口中都需要携带Token才可以正确获取数据，所以需要在接口调用时携带Token。另
+外，为了统一控制采取请求拦截器携带的方案
+
+Axios请求拦截器可以在接口正式发起之前对请求参数做一些事情，通常Token数据会被注入到请求header中，格式按
+照后端要求的格式进行拼接处理
+
+配置
+```js
+if (token) {
+	config.headers.Authorization = `Bearer ${token}`
+}
+```
