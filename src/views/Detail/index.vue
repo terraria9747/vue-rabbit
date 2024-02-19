@@ -3,8 +3,6 @@ import { getGoodsDetailAPI } from "@/apis/detail.js";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import HotDetail from "./HotDetail/index.vue";
-import imageView from "@/components/imageView/index.vue";
-import XtxSku from "@/components/XtxSku/index.vue";
 
 const route = useRoute();
 
@@ -21,7 +19,7 @@ onMounted(() => {
 
 // sku规格
 const changeHandler = (sku) => {
-  console.log(sku);
+  // console.log(sku);
 };
 </script>
 
