@@ -1,9 +1,11 @@
 <script setup>
 import { ref } from "vue";
-import { getLoginAPI } from "@/apis/login.js";
 import { useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
 import "element-plus/theme-chalk/el-message.css";
+import { useUserStore } from "@/stores/user";
+
+const userStore = useUserStore();
 
 // 数据
 const userinfo = ref({
@@ -47,7 +49,7 @@ const goLogin = () => {
     // 通过验证
     if (valid) {
       // 登录请求-弹框提示-页面跳转
-      await getLoginAPI({ account, password });
+      await userStore.getUserInfo({ account, password });
       ElMessage({ type: "success", message: "登录成功" });
       router.replace("/");
     }
