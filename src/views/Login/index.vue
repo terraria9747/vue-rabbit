@@ -1,10 +1,16 @@
 <script setup>
 import { ref } from "vue";
+import { getLoginAPI } from "@/apis/login.js";
+import { useRouter } from "vue-router";
+import { ElMessage } from "element-plus";
+import "element-plus/theme-chalk/el-message.css";
 
 // 数据
 const userinfo = ref({
-  account: "",
-  password: "",
+  account: "12056258282",
+  password: "hm#qd@23!",
+  // account: "",
+  // password: "",
   agree: true,
 });
 
@@ -30,12 +36,20 @@ const rules = ref({
 
 // 获取form组件实例
 const formRef = ref(null);
+const router = useRouter();
 
 // 登录
 const goLogin = () => {
-  formRef.value.validate((valid) => {
+  const { account, password } = userinfo.value;
+
+  // 调用实例方法
+  formRef.value.validate(async (valid) => {
+    // 通过验证
     if (valid) {
-      console.log("准备登录");
+      // 登录请求-弹框提示-页面跳转
+      await getLoginAPI({ account, password });
+      ElMessage({ type: "success", message: "登录成功" });
+      router.replace("/");
     }
   });
 };

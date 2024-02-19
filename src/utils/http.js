@@ -1,5 +1,7 @@
 // axios配置
 import axios from "axios";
+import { ElMessage } from "element-plus";
+import "element-plus/theme-chalk/el-message.css";
 
 // 配置基础实例
 const http = axios.create({
@@ -8,16 +10,17 @@ const http = axios.create({
 });
 
 // 添加请求拦截器
-axios.interceptors.request.use(function (config) {
+http.interceptors.request.use(function (config) {
 	return config;
 }, function (error) {
 	return Promise.reject(error);
 });
 
 // 添加响应拦截器
-axios.interceptors.response.use(function (response) {
+http.interceptors.response.use(function (response) {
 	return response;
 }, function (error) {
+	ElMessage({ type: "warning", message: error.response.data.message });
 	return Promise.reject(error);
 });
 
