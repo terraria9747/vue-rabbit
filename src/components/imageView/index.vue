@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import { useMouseInElement } from "@vueuse/core";
 
 // 图片列表
 const imageList = [
@@ -10,12 +11,48 @@ const imageList = [
   "https://yanxuan-item.nosdn.127.net/f881cfe7de9a576aaeea6ee0d1d24823.jpg",
 ];
 
-// 获取小图坐标
+// 1. 通过小图切换大图
 const activeIndex = ref(0);
 // 切换坐标
 const changeIndex = (i) => {
   activeIndex.value = i;
 };
+
+// 2. 大图放大镜效果 - 滑块跟随鼠标移动
+const target = ref(null);
+const { elementX, elementY, isOutside } = useMouseInElement(target);
+
+// 鼠标移动范围
+const left = ref(0);
+const top = ref(0);
+
+watch([elementX, elementY, isOutside], () => {
+  // 进入目标盒子才执行
+  if (isOutside.value) return;
+
+  // 合法范围内移动
+  if (elementX.value > 100 && elementX.value < 300) {
+    left.value = elementX.value - 100;
+  }
+  if (elementY.value > 100 && elementY.value < 300) {
+    top.value = elementY.value - 100;
+  }
+
+  // 超出范围
+  if (elementX.value < 100) {
+    left.value = 0;
+  }
+  if (elementX.value > 300) {
+    left.value = 200;
+  }
+
+  if (elementY.value < 100) {
+    top.value = 0;
+  }
+  if (elementY.value > 300) {
+    top.value = 200;
+  }
+});
 </script>
 
 <template>
@@ -24,7 +61,7 @@ const changeIndex = (i) => {
     <div class="middle" ref="target">
       <img :src="imageList[activeIndex]" alt="" />
       <!-- 蒙层小滑块 -->
-      <div class="layer" :style="{ left: `0px`, top: `0px` }"></div>
+      <div class="layer" :style="{ left: `${left}px`, top: `${top}px` }"></div>
     </div>
     <!-- 小图列表 -->
     <ul class="small">
