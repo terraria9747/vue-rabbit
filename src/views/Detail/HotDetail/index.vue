@@ -1,21 +1,31 @@
 <script setup>
 import { getHotGoodsAPI } from "@/apis/detail";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
+
+// 接收父组件的值
+const props = defineProps({
+  HotType: Number,
+});
 
 const route = useRoute();
 
 // 获取热榜数据
 const hotGoods = ref([]);
-const query = ref({
-  id: route.params.id,
-  limit: 4,
-  type: 1,
-});
 const getHotGoods = async () => {
-  const res = await getHotGoodsAPI(query);
+  const res = await getHotGoodsAPI({
+    id: route.params.id,
+    type: props.HotType,
+  });
   hotGoods.value = res.data.result;
 };
+
+// 计算属性 显示指定title
+const HOTMAP = {
+  1: "24小时热榜",
+  2: "周热榜",
+};
+const title = computed(() => HOTMAP[props.HotType]);
 
 onMounted(() => {
   getHotGoods();
@@ -24,7 +34,7 @@ onMounted(() => {
 
 <template>
   <div class="goods-hot">
-    <h3>周日榜单</h3>
+    <h3>{{ title }}</h3>
     <!-- 商品区块 -->
     <RouterLink
       to="/"

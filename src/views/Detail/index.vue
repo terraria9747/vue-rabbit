@@ -132,8 +132,8 @@ onMounted(() => {
             </div>
             <!-- 24热榜+专题推荐 -->
             <div class="goods-aside">
-              <HotDetail />
-              <HotDetail />
+              <HotDetail :HotType="1" />
+              <HotDetail :HotType="2" />
             </div>
           </div>
         </div>
