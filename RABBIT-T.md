@@ -327,3 +327,9 @@ if (token) {
 	config.headers.Authorization = `Bearer ${token}`
 }
 ```
+
+## 8. 退出登录
+1. 点击退出登录按钮弹出确认框
+2. 确认退出
+3. 清除用户信息
+4. 跳转到登录页
