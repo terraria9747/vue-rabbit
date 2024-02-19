@@ -27,6 +27,18 @@ const rules = ref({
     },
   ],
 });
+
+// 获取form组件实例
+const formRef = ref(null);
+
+// 登录
+const goLogin = () => {
+  formRef.value.validate((valid) => {
+    if (valid) {
+      console.log("准备登录");
+    }
+  });
+};
 </script>
 
 <template>
@@ -56,6 +68,7 @@ const rules = ref({
               status-icon
               :model="userinfo"
               :rules="rules"
+              ref="formRef"
             >
               <el-form-item label="账户" prop="account">
                 <el-input v-model="userinfo.account" />
@@ -68,7 +81,9 @@ const rules = ref({
                   我已同意隐私条款和服务条款
                 </el-checkbox>
               </el-form-item>
-              <el-button size="large" class="subBtn">点击登录</el-button>
+              <el-button size="large" class="subBtn" @click="goLogin"
+                >点击登录</el-button
+              >
             </el-form>
           </div>
         </div>
