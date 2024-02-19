@@ -27,6 +27,13 @@ const getGoods = async () => {
   goodList.value = res.data.result.items;
 };
 
+// 切换tab栏
+const onTabChange = () => {
+  // console.log("tab栏切换了", reqData.value.sortField);
+  reqData.value.page = 1;
+  getGoods();
+};
+
 onMounted(() => {
   getSubCategory();
   getGoods();
@@ -46,7 +53,7 @@ onMounted(() => {
       </el-breadcrumb>
     </div>
     <div class="sub-container">
-      <el-tabs>
+      <el-tabs v-model="reqData.sortField" @tab-change="onTabChange">
         <el-tab-pane label="最新商品" name="publishTime"></el-tab-pane>
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
