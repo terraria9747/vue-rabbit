@@ -1,19 +1,34 @@
 // 购物车
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
+import { useUserStore } from "./user"
+import { addCartAPI, getCartAPI } from "@/apis/cart"
 
 export const useCartStore = defineStore("cart", () => {
 	// 购物车信息
 	const cartList = ref([])
+	// token信息
+	const userStore = useUserStore()
+	const isLogin = computed(() => userStore.userinfo.token)
 
 	// 添加购物车
-	const addCartList = (goods) => {
-		// 如果该商品有, 添加数量; 如果没有, 添加商品
-		const item = cartList.value.find((item) => goods.skuId === item.skuId)
-		if (item) {
-			item.count++
+	const addCartList = async (goods) => {
+		const { skuId, count } = goods;
+		if (isLogin.value) {
+			// 加入购物车
+			await addCartAPI({ skuId, count })
+			// 获取购物车数据
+			const res = await getCartAPI()
+			// 覆盖未登录的购物车
+			cartList.value = res.data.result
 		} else {
-			cartList.value.push(goods)
+			// 如果该商品有, 添加数量; 如果没有, 添加商品
+			const item = cartList.value.find((item) => goods.skuId === item.skuId)
+			if (item) {
+				item.count++
+			} else {
+				cartList.value.push(goods)
+			}
 		}
 	}
 
