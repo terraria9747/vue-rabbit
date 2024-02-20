@@ -1,6 +1,12 @@
 <script setup>
 import { getCheckoutAPI } from "@/apis/checkout";
 import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+import { getPayAPI } from "@/apis/pay.js";
+import { useCartStore } from "@/stores/cartStore.js";
+
+const router = useRouter();
+const cartStore = useCartStore();
 
 const checkInfo = ref({}); // 订单对象
 const curAddress = ref({}); // 地址对象
@@ -33,6 +39,35 @@ const confirm = () => {
   // 替换数据 - 关闭窗口
   curAddress.value = activeAddress.value;
   showDialog.value = false;
+};
+
+// 获取订单ID
+const getOrderId = async () => {
+  const { data } = await getPayAPI({
+    deliveryTimeType: 1,
+    payType: 1,
+    payChannel: 1,
+    buyerMessage: "",
+    goods: checkInfo.value.goods.map((item) => {
+      return {
+        skuId: item.skuId,
+        count: item.count,
+      };
+    }),
+    addressId: curAddress.value.id,
+  });
+  const orderId = data.result.id;
+
+  // 携带订单Id进行跳转
+  router.push({
+    path: "/pay",
+    query: {
+      id: orderId,
+    },
+  });
+
+  // 重新获取购物车数据
+  cartStore.getNewCart();
 };
 </script>
 
@@ -143,7 +178,9 @@ const confirm = () => {
         </div>
         <!-- 提交订单 -->
         <div class="submit">
-          <el-button type="primary" size="large">提交订单</el-button>
+          <el-button type="primary" size="large" @click="getOrderId"
+            >提交订单</el-button
+          >
         </div>
       </div>
     </div>
