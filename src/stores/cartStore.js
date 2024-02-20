@@ -17,9 +17,17 @@ export const useCartStore = defineStore("cart", () => {
 		}
 	}
 
+	// 删除购物车
+	const delCartList = (skuId) => {
+		// 选择的商品id === 购物车的商品id
+		const index = cartList.value.findIndex(item => skuId === item.skuId)
+		cartList.value.splice(index, 1)
+	}
+
 	return {
 		cartList,
-		addCartList
+		addCartList,
+		delCartList
 	}
 }, {
 	persist: true,
