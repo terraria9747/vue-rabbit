@@ -2,7 +2,7 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import { useUserStore } from "./user"
-import { addCartAPI, getCartAPI } from "@/apis/cart"
+import { addCartAPI, getCartAPI, delCartAPI } from "@/apis/cart"
 
 export const useCartStore = defineStore("cart", () => {
 	// 购物车信息
@@ -17,10 +17,7 @@ export const useCartStore = defineStore("cart", () => {
 		if (isLogin.value) {
 			// 加入购物车
 			await addCartAPI({ skuId, count })
-			// 获取购物车数据
-			const res = await getCartAPI()
-			// 覆盖未登录的购物车
-			cartList.value = res.data.result
+			getNewCart()
 		} else {
 			// 如果该商品有, 添加数量; 如果没有, 添加商品
 			const item = cartList.value.find((item) => goods.skuId === item.skuId)
@@ -33,10 +30,24 @@ export const useCartStore = defineStore("cart", () => {
 	}
 
 	// 删除购物车
-	const delCartList = (skuId) => {
-		// 选择的商品id === 购物车的商品id
-		const index = cartList.value.findIndex(item => skuId === item.skuId)
-		cartList.value.splice(index, 1)
+	const delCartList = async (skuId) => {
+		if (isLogin.value) {
+			// 删除购物车
+			await delCartAPI([skuId])
+			getNewCart()
+		} else {
+			// 选择的商品id === 购物车的商品id
+			const index = cartList.value.findIndex(item => skuId === item.skuId)
+			cartList.value.splice(index, 1)
+		}
+	}
+
+	// 获取最新购物车数据
+	const getNewCart = async () => {
+		// 获取购物车数据
+		const res = await getCartAPI()
+		// 覆盖未登录的购物车
+		cartList.value = res.data.result
 	}
 
 	// 修改单选框
