@@ -103,6 +103,7 @@ export const useCartStore = defineStore("cart", () => {
 		addCartList,
 		delCartList,
 		clearCartList,
+		getNewCart
 	}
 }, {
 	persist: true,
