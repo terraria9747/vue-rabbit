@@ -21,6 +21,19 @@ onMounted(() => {
 
 // 控制弹框显示与隐藏
 const showDialog = ref(false);
+
+// 获取收货地址的数据
+const activeAddress = ref({});
+const activeCheck = (item) => {
+  activeAddress.value = item;
+};
+
+// 确认切换
+const confirm = () => {
+  // 替换数据 - 关闭窗口
+  curAddress.value = activeAddress.value;
+  showDialog.value = false;
+};
 </script>
 
 <template>
@@ -142,6 +155,8 @@ const showDialog = ref(false);
         class="text item"
         v-for="item in checkInfo.userAddresses"
         :key="item.id"
+        :class="{ active: activeAddress.id === item.id }"
+        @click="activeCheck(item)"
       >
         <ul>
           <li>
@@ -155,7 +170,7 @@ const showDialog = ref(false);
     <template #footer>
       <span class="dialog-footer">
         <el-button>取消</el-button>
-        <el-button type="primary">确定</el-button>
+        <el-button type="primary" @click="confirm">确定</el-button>
       </span>
     </template>
   </el-dialog>
