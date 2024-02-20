@@ -3,6 +3,7 @@ import { createPinia } from 'pinia'
 import { lazyPlugin } from "@/directives/index.js"
 import { componentPlug } from "@/components/index"
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import "default-passive-events";
 
 import App from './App.vue'
 import router from './router'
