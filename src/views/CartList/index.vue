@@ -8,6 +8,12 @@ const checkChange = (i, selected) => {
   // 当前的状态 | 当先的信息
   cartStore.singleCheck(i.skuId, selected);
 };
+
+const checkAllCheck = (selected) => {
+  cartStore.allCheck(selected);
+};
+
+// 修改全选框
 </script>
 
 <template>
@@ -18,7 +24,10 @@ const checkChange = (i, selected) => {
           <thead>
             <tr>
               <th width="120">
-                <el-checkbox />
+                <el-checkbox
+                  :model-value="cartStore.isAll"
+                  @change="checkAllCheck"
+                />
               </th>
               <th width="400">商品信息</th>
               <th width="220">单价</th>

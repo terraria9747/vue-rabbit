@@ -24,6 +24,17 @@ export const useCartStore = defineStore("cart", () => {
 		cartList.value.splice(index, 1)
 	}
 
+	// 修改单选框
+	const singleCheck = (skuId, selected) => {
+		const item = cartList.value.find(item => item.skuId === skuId)
+		item.selected = selected
+	}
+
+	// 全选 -- 联动子复选框选中
+	const allCheck = (selected) => {
+		cartList.value.forEach((item) => { item.selected = selected })
+	}
+
 	// 商品总数计算
 	const allCount = computed(() => {
 		return cartList.value.reduce((a, c) => a + c.count, 0)
@@ -34,17 +45,18 @@ export const useCartStore = defineStore("cart", () => {
 		return cartList.value.reduce((a, c) => a + c.price * c.count, 0)
 	})
 
-	// 修改单选框
-	const singleCheck = (skuId, selected) => {
-		const item = cartList.value.find(item => item.skuId === skuId)
-		item.selected = selected
-	}
+	// 是否全选 --- 子复选框全选后触发
+	const isAll = computed(() => {
+		return cartList.value.every((item) => item.selected)
+	})
 
 	return {
 		cartList,
 		allCount,
 		allPrice,
 		singleCheck,
+		isAll,
+		allCheck,
 		addCartList,
 		delCartList,
 	}
