@@ -34,12 +34,19 @@ export const useCartStore = defineStore("cart", () => {
 		return cartList.value.reduce((a, c) => a + c.price * c.count, 0)
 	})
 
+	// 修改单选框
+	const singleCheck = (skuId, selected) => {
+		const item = cartList.value.find(item => item.skuId === skuId)
+		item.selected = selected
+	}
+
 	return {
 		cartList,
 		allCount,
 		allPrice,
+		singleCheck,
 		addCartList,
-		delCartList
+		delCartList,
 	}
 }, {
 	persist: true,
