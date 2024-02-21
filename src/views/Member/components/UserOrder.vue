@@ -23,10 +23,14 @@ const params = ref({
   orderState: 0,
 });
 
+// 总页码
+const total = ref(0);
+
 // 获取我的订单
 const getMyOrder = async () => {
   const { data } = await getMyOrderAPI(params.value);
   orderList.value = data.result.items;
+  total.value = data.result.counts;
 };
 
 onMounted(() => {
@@ -36,7 +40,12 @@ onMounted(() => {
 // 切换tab栏
 const tabChange = (type) => {
   params.value.orderState = type;
-  console.log("params.value.orderState", params.value.orderState);
+  getMyOrder();
+};
+
+// 分页器
+const currentChange = (current) => {
+  params.value.page = current;
   getMyOrder();
 };
 </script>
@@ -134,7 +143,13 @@ const tabChange = (type) => {
           </div>
           <!-- 分页 -->
           <div class="pagination-container">
-            <!-- <el-pagination background layout="prev, pager, next" /> -->
+            <el-pagination
+              :page-size="params.pageSize"
+              :total="total"
+              background
+              layout="prev, pager, next"
+              @current-change="currentChange"
+            />
           </div>
         </div>
       </div>
