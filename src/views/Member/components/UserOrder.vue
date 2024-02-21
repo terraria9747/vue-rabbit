@@ -1,4 +1,7 @@
 <script setup>
+import { getMyOrderAPI } from "@/apis/order.js";
+import { onMounted, ref } from "vue";
+
 // tab列表
 const tabTypes = [
   { name: "all", label: "全部订单" },
@@ -9,8 +12,26 @@ const tabTypes = [
   { name: "complete", label: "已完成" },
   { name: "cancel", label: "已取消" },
 ];
+
 // 订单列表
-const orderList = [];
+const orderList = ref([]);
+
+// 订单参数
+const params = {
+  page: 1,
+  pageSize: 2,
+  orderState: 0,
+};
+
+// 获取我的订单
+const getMyOrder = async () => {
+  const { data } = await getMyOrderAPI(params.value);
+  orderList.value = data.result.items;
+};
+
+onMounted(() => {
+  getMyOrder();
+});
 </script>
 
 <template>
@@ -106,7 +127,7 @@ const orderList = [];
           </div>
           <!-- 分页 -->
           <div class="pagination-container">
-            <el-pagination background layout="prev, pager, next" />
+            <!-- <el-pagination background layout="prev, pager, next" /> -->
           </div>
         </div>
       </div>
