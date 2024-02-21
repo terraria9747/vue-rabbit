@@ -17,11 +17,11 @@ const tabTypes = [
 const orderList = ref([]);
 
 // 订单参数
-const params = {
+const params = ref({
   page: 1,
   pageSize: 2,
   orderState: 0,
-};
+});
 
 // 获取我的订单
 const getMyOrder = async () => {
@@ -32,11 +32,18 @@ const getMyOrder = async () => {
 onMounted(() => {
   getMyOrder();
 });
+
+// 切换tab栏
+const tabChange = (type) => {
+  params.value.orderState = type;
+  console.log("params.value.orderState", params.value.orderState);
+  getMyOrder();
+};
 </script>
 
 <template>
   <div class="order-container">
-    <el-tabs>
+    <el-tabs @tab-change="tabChange">
       <!-- tab切换 -->
       <el-tab-pane
         v-for="item in tabTypes"
