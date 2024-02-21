@@ -1,5 +1,22 @@
 <script setup>
-const userStore = {};
+import { useUserStore } from "@/stores/user";
+import { getLikeAPI } from "@/apis/like.js";
+import { onMounted, ref } from "vue";
+import GoodsItem from "@/views/Home/components/HomeGoodsltem.vue";
+
+// pinia数据渲染
+const userStore = useUserStore();
+
+// 接口数据渲染 -- 猜你喜欢
+const likeList = ref();
+const getLike = async () => {
+  const { data } = await getLikeAPI();
+  likeList.value = data.result;
+};
+
+onMounted(() => {
+  getLike();
+});
 </script>
 
 <template>
@@ -7,9 +24,9 @@ const userStore = {};
     <!-- 用户信息 -->
     <div class="user-meta">
       <div class="avatar">
-        <img :src="userStore.userInfo?.avatar" />
+        <img :src="userStore.userinfo?.avatar" />
       </div>
-      <h4>{{ userStore.userInfo?.account }}</h4>
+      <h4>{{ userStore.userinfo?.account }}</h4>
     </div>
     <div class="item">
       <a href="javascript:;">
@@ -32,7 +49,7 @@ const userStore = {};
         <h4 data-v-bcb266e0="">猜你喜欢</h4>
       </div>
       <div class="goods-list">
-        <!-- <GoodsItem v-for="good in likeList" :key="good.id" :good="good" /> -->
+        <GoodsItem v-for="good in likeList" :key="good.id" :good="good" />
       </div>
     </div>
   </div>
