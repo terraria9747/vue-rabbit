@@ -12,7 +12,7 @@ export const useCountDown = () => {
 	// 倒计时逻辑
 	const start = (currentTime) => {
 		time.value = currentTime;
-		const timer = setInterval(() => {
+		timer = setInterval(() => {
 			time.value--
 		}, 1000);
 	}
